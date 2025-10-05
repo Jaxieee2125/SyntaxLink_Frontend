@@ -1,7 +1,7 @@
 import apiClient from './client';
 import { DeveloperProfile, EditableProfile, UserStats } from '@/types/profile';
 import { ApiError } from '@/types/auth';
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 
 interface ProfileResponse {
     success: boolean;
@@ -60,5 +60,13 @@ export const downloadMyCv = async (token: string, userName: string): Promise<str
     } catch (error) {
         console.error("Download CV Error:", error);
         throw new Error("Không thể tải CV.");
+    }
+};
+export const getProfileByUserId = async (userId: string): Promise<DeveloperProfile> => {
+    try {
+        const response = await apiClient.get<ProfileResponse>(`/profile/user/${userId}`);
+        return response.data.data;
+    } catch (error: any) {
+        throw (error.response?.data as ApiError) || { success: false, error: 'Lỗi mạng' };
     }
 };

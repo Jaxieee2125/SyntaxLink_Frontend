@@ -60,3 +60,7 @@ export const checkApplicationStatus = async (jobId: string): Promise<Application
         throw (error.response?.data as ApiError) || { success: false, error: 'Lỗi mạng' };
     }
 }
+
+export async function deleteEmployerJob(id: string) {
+  return apiClient.delete(`/employer/jobs/${id}`);
+}

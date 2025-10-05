@@ -5,7 +5,7 @@ import Colors from '@/constants/Colors';
 
 const getStatusDetails = (status: ApplicationStatusValue) => {
     switch (status) {
-        case 'submitted': return { text: 'Đã nộp', color: Colors.primary };
+        case 'submitted': return { text: 'Đã nộp', color: Colors.success };
         case 'viewed': return { text: 'NTD đã xem', color: '#3B82F6' };
         case 'interview': return { text: 'Mời phỏng vấn', color: '#10B981' };
         case 'offered': return { text: 'Đã nhận offer', color: Colors.success };

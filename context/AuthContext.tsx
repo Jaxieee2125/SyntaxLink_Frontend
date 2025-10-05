@@ -49,15 +49,26 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     loadAuthData();
   }, []);
 
-  const login = async (email: string, password: string) => {
-    const data = await apiLogin(email, password);
-    setToken(data.token);
-    setUser(data.user);
-    apiClient.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-    await AsyncStorage.setItem('user_token', data.token);
-    await AsyncStorage.setItem('user_data', JSON.stringify(data.user));
-    setAuthStatus('authenticated');
-  };
+const login = async (email: string, password: string) => {
+  const data = await apiLogin(email, password);
+  setToken(data.token);
+  setUser(data.user);
+  apiClient.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+  await AsyncStorage.setItem('user_token', data.token);
+  await AsyncStorage.setItem('user_data', JSON.stringify(data.user));
+  setAuthStatus('authenticated');
+
+  // ✅ CHUYỂN TRANG NGAY sau khi login xong
+  const role = data.user.role ?? 'developer';
+  if (role === 'admin') {
+    router.replace('/(admin)/(tabs)');
+  } else if (role === 'employer') {
+    router.replace('/(employer)/(tabs)');
+  } else {
+    router.replace('/(developer)/(tabs)');
+  }
+};
+
 
   const logout = async () => {
     setUser(null);

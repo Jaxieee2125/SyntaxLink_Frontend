@@ -89,7 +89,7 @@ export default function EditProfileScreen() {
       
       await updateMyProfile(profileData);
       Alert.alert('Thành công', 'Hồ sơ của bạn đã được cập nhật.');
-      router.back();
+      router.push('/(developer)/(tabs)/profile'); // Quay về trang profile sau khi lưu
     } catch (error: any) {
       Alert.alert('Lỗi', error.error || 'Không thể cập nhật hồ sơ.');
     } finally {

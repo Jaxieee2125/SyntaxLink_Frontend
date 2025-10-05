@@ -31,3 +31,21 @@ export const getAllProblems = async (): Promise<Problem[]> => {
     throw (error.response?.data as ApiError) || { success: false, error: 'Lỗi mạng' };
   }
 };
+
+export const createProblem = async (data: Partial<Problem>) => {
+  try {
+    const response = await apiClient.post('/problems', data);
+    return response.data;
+  } catch (error: any) {
+    console.error("❌ Lỗi từ createProblem:", error?.response?.data || error);
+    throw (error.response?.data as ApiError) || { success: false, error: 'Lỗi mạng' };
+  }
+};
+
+export const updateProblem = async (id: string, data: Partial<Problem>) => {
+  await apiClient.put(`/problems/${id}`, data);
+};
+
+export const deleteProblem = async (id: string) => {
+  await apiClient.delete(`/problems/${id}`);
+};
